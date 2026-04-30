@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:music_app/core/theme/app_pallate.dart';
 
 class GradientButton extends StatelessWidget {
-  const GradientButton({super.key});
+  final String btnText;
+  final VoidCallback onTap;
+  const GradientButton({super.key, required this.btnText, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,9 @@ class GradientButton extends StatelessWidget {
           backgroundColor: AppPallate.transparentColor,
           fixedSize: Size(395, 55),
         ),
-        onPressed: () {},
+        onPressed: () => onTap(),
         child: Text(
-          'Signup',
+          btnText,
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
         ),
       ),
