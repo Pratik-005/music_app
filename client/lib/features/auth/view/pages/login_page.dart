@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/core/theme/app_pallate.dart';
+import 'package:music_app/features/auth/repositories/auth_remote_repository.dart';
+import 'package:music_app/features/auth/view/pages/signup_page.dart';
 import 'package:music_app/features/auth/view/widgets/custom_field.dart';
 import 'package:music_app/features/auth/view/widgets/gradient_button.dart';
 
@@ -42,21 +44,30 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 10),
               CustomField(hintText: 'Password', controller: passwordController),
               SizedBox(height: 20),
-              GradientButton(btnText: 'Sign in', onTap: () => ()),
+              GradientButton(
+                btnText: 'Sign in',
+                onTap: () async => await AuthRemoteRepository().login(
+                  email: emailController.text,
+                  password: passwordController.text,
+                ),
+              ),
               SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                  text: 'Don\'t have an account ? ',
-                  style: Theme.of(context).textTheme.titleMedium,
-                  children: [
-                    TextSpan(
-                      text: 'sign up',
-                      style: TextStyle(
-                        color: AppPallate.gradient2,
-                        fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupPage())),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Don\'t have an account ? ',
+                    style: Theme.of(context).textTheme.titleMedium,
+                    children: [
+                      TextSpan(
+                        text: 'sign up',
+                        style: TextStyle(
+                          color: AppPallate.gradient2,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
