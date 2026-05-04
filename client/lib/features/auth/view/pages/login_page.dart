@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart' hide State;
 import 'package:music_app/core/theme/app_pallate.dart';
 import 'package:music_app/features/auth/repositories/auth_remote_repository.dart';
 import 'package:music_app/features/auth/view/pages/signup_page.dart';
@@ -46,10 +47,16 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 20),
               GradientButton(
                 btnText: 'Sign in',
-                onTap: () async => await AuthRemoteRepository().login(
+                onTap: () async{
+                  final res =  await AuthRemoteRepository().login(
                   email: emailController.text,
                   password: passwordController.text,
-                ),
+                );
+                final result = switch(res){
+                  Left(value : final l) => l ,
+                  Right(value: final r) =>r
+                }
+                }
               ),
               SizedBox(height: 20),
               GestureDetector(
