@@ -47,20 +47,23 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 20),
               GradientButton(
                 btnText: 'Sign in',
-                onTap: () async{
-                  final res =  await AuthRemoteRepository().login(
-                  email: emailController.text,
-                  password: passwordController.text,
-                );
-                final result = switch(res){
-                  Left(value : final l) => l ,
-                  Right(value: final r) =>r
-                }
-                }
+                onTap: () async {
+                  final res = await AuthRemoteRepository().login(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+                  final result = switch (res) {
+                    Left(value: final l) => l,
+                    Right(value: final r) => r,
+                  };
+                },
               ),
               SizedBox(height: 20),
               GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupPage())),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignupPage()),
+                ),
                 child: RichText(
                   text: TextSpan(
                     text: 'Don\'t have an account ? ',
