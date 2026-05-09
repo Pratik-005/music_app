@@ -34,7 +34,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     final isLoading = ref.watch(authViewmodelProvider).isLoading == true;
 
     ref.listen(authViewmodelProvider, (previous, next) {
-      next.when(
+      next?.when(
         data: (data) {
           showSnackBar(context, 'Account created successfully! Please  login.');
           Navigator.push(

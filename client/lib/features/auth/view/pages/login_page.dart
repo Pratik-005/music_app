@@ -35,7 +35,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final isLoading = ref.watch(authViewmodelProvider).isLoading == true;
 
     ref.listen(authViewmodelProvider, (previous, next) {
-      next.when(
+      next?.when(
         data: (data) {
           Navigator.push(
             context,
