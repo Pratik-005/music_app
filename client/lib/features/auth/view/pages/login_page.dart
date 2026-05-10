@@ -32,7 +32,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authViewmodelProvider).isLoading == true;
+    final isLoading = ref.watch(
+      authViewmodelProvider.select((val) => val?.isLoading == true),
+    );
 
     ref.listen(authViewmodelProvider, (previous, next) {
       next?.when(
@@ -75,14 +77,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     GradientButton(
                       btnText: 'Sign in',
                       onTap: () async {
-                        final res = await AuthRemoteRepository().login(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        final result = switch (res) {
-                          Left(value: final l) => l,
-                          Right(value: final r) => r,
-                        };
+                        if (formKey.currentState!.validate()) {
+                          await ref
+                              .read(authViewmodelProvider.notifier)
+                              .login(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                        }
                       },
                     ),
                     SizedBox(height: 20),
