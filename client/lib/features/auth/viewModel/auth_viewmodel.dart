@@ -11,12 +11,12 @@ class AuthViewmodel extends _$AuthViewmodel {
   late AuthRemoteRepository _authRemoteRepository;
   // ignore: unused_field
   late AuthLocalRepository _authLocalRepository;
-  late CurrentUserNotifier _currentUserNotifier ;
+  late CurrentUserNotifier _currentUserNotifier;
   @override
   AsyncValue<UserModel>? build() {
     _authRemoteRepository = ref.watch(authRemoteRepositoryProvider);
     _authLocalRepository = ref.watch(authLocalRepositoryProvider);
-    _currentUserNotifier= ref.watch(currentUserProvider).notifier;
+    _currentUserNotifier = ref.watch(currentUserProvider).notifier;
     return null;
   }
 
@@ -63,8 +63,6 @@ class AuthViewmodel extends _$AuthViewmodel {
     return state = AsyncValue.data(user);
   }
 
-
-
   Future<UserModel?> getUserData() async {
     state = const AsyncValue.loading();
     final token = _authLocalRepository.getToken();
@@ -72,16 +70,15 @@ class AuthViewmodel extends _$AuthViewmodel {
       final user = await _authRemoteRepository.getUser(token);
       final result = switch (user) {
         Left(value: final l) => state = AsyncValue.error(l, StackTrace.current),
-        Right(value: final r) =>_getUserSuccess(r);
+        Right(value: final r) => _getUserSuccess(r),
       };
-      return result.value ;
+      return result.value;
     }
-    return null ;
+    return null;
   }
 
-    AsyncValue<UserModel> _getUserSuccess(UserModel user) {
+  AsyncValue<UserModel> _getUserSuccess(UserModel user) {
     _currentUserNotifier.addUser(user);
     return state = AsyncValue.data(user);
   }
-
 }

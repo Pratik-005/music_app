@@ -6,7 +6,7 @@ import 'package:music_app/core/utils/show_snackbar.dart';
 import 'package:music_app/core/widgets/loader.dart';
 import 'package:music_app/features/auth/repositories/auth_remote_repository.dart';
 import 'package:music_app/features/auth/view/pages/signup_page.dart';
-import 'package:music_app/features/auth/view/widgets/custom_field.dart';
+import 'package:music_app/core/widgets/custom_field.dart';
 import 'package:music_app/features/auth/view/widgets/gradient_button.dart';
 import 'package:music_app/features/auth/viewModel/auth_viewmodel.dart';
 
@@ -39,9 +39,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref.listen(authViewmodelProvider, (previous, next) {
       next?.when(
         data: (data) {
-          Navigator.push(
+          Navigator.pushAndRemoveUnitl(
             context,
             MaterialPageRoute(builder: (context) => const LoginPage()),
+            (_)=>false
           );
         },
         error: (error, stackTrace) => showSnackBar(context, error.toString()),

@@ -4,7 +4,7 @@ import 'package:music_app/core/theme/app_pallate.dart';
 import 'package:music_app/core/utils/show_snackbar.dart';
 import 'package:music_app/core/widgets/loader.dart';
 import 'package:music_app/features/auth/view/pages/login_page.dart';
-import 'package:music_app/features/auth/view/widgets/custom_field.dart';
+import 'package:music_app/core/widgets/custom_field.dart';
 import 'package:music_app/features/auth/view/widgets/gradient_button.dart';
 import 'package:music_app/features/auth/viewModel/auth_viewmodel.dart';
 
