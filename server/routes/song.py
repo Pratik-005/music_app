@@ -38,3 +38,5 @@ def upload_song(song : UploadFile = File(...),
     db.add(new_song)
     db.commit()
     db.refresh(new_song)
+    
+    return new_song
