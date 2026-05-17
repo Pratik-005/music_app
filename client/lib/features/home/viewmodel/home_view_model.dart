@@ -4,10 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:music_app/core/providers/current_user_notifier.dart';
 import 'package:music_app/core/utils/color_convertor.dart';
+import 'package:music_app/features/home/model/song_model.dart';
 import 'package:music_app/features/home/repositories/home_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_view_model.g.dart';
+
+@riverpod
+Future<List<SongModel>> getAllSongs(Ref ref) async {
+  final token = ref.watch(currentUserProvider)!.token;
+  final res = await ref.watch(homeRepositoryProvider).getSongs(token: token);
+
+  return switch (res) {
+    Left(value: final l) => throw l.message,
+    Right(value: final r) => r,
+  };
+}
 
 @riverpod
 class HomeViewModel extends _$HomeViewModel {

@@ -1,10 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:music_app/core/constants/server_constants.dart';
 import 'package:music_app/core/failure/failure.dart';
+import 'package:music_app/features/home/model/song_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_repository.g.dart';
@@ -51,6 +52,31 @@ class HomeRepository {
       }
 
       return right(await res.stream.bytesToString());
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, List<SongModel>>> getSongs({
+    required String token,
+  }) async {
+    try {
+      final res = await http.get(
+        Uri.parse('${ServerConstants.apiUrl}/song/list'),
+        headers: {'x_auth_token': token, 'Content-Type': 'application/json'},
+      );
+
+      var body = jsonDecode(res.body);
+
+      if (res.statusCode != 201) {
+        body = body as Map<String, dynamic>;
+        return left(Failure(body['detail']));
+      }
+
+      body = body as List;
+
+      final songs = body.map((e) => SongModel.fromJson(e)).toList();
+      return right(songs);
     } catch (e) {
       return left(Failure(e.toString()));
     }
