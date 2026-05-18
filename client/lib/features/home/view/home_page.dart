@@ -14,15 +14,12 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   int selectedIndex = 0;
 
-  final pages = [
-    SongsPage(),
-    LibraryPage()
-  ]
-  
+  final pages = [SongsPage(), LibraryPage()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:pages[selectedIndex],
+      body: pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (value) => setState(() => selectedIndex = value),
